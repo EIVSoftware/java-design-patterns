@@ -1,7 +1,7 @@
 package com.eiv.poc.appparams.cfg;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,6 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.eiv.poc.appparams.beans.ParametrosStoreGlobalScope;
 import com.eiv.poc.appparams.beans.ParametrosStoreRequestScope;
 import com.eiv.poc.appparams.entities.ParametroEntity;
+import com.eiv.poc.appparams.interfaces.ParametroEnum;
 import com.eiv.poc.appparams.repositories.ParametroRepository;
 
 @Configuration
@@ -59,12 +60,10 @@ public class ParametrosConfig {
 				if(header != null && !header.trim().isEmpty()) {
 					
 					ParametrosStoreGlobalScope globalScope = getParametrosStore();
-					Set<ParametroEntity> parametroEntities = globalScope.getParametrosHashmap(Long.valueOf(header));
+					Map<ParametroEnum, ParametroEntity> map = globalScope.getParametrosHashmap(Long.valueOf(header));
 					
 					ParametrosStoreRequestScope requestScope = getParametrosStoreRequestScope();
-					parametroEntities.forEach(parametroEntity -> {
-						requestScope.load(parametroEntity);
-					});
+					requestScope.load(map);
 				}
 				
 				filterChain.doFilter(request, response);
