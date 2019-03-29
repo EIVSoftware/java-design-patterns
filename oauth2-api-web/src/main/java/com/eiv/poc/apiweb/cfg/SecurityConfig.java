@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.eiv.poc.apiweb.oauth2.CustomOAuth2UserService;
@@ -39,12 +40,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
             .httpBasic()
                 .disable()
-            .antMatcher("/**")
+            .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
             .authorizeRequests()
-                .antMatchers("/auth/**", "/oauth2/**")
-                .permitAll()
-            .anyRequest()
-                .authenticated()
+                .antMatchers(
+                        "/",
+                        "/h2-console/**", 
+                        "/auth/**", 
+                        "/oauth2/**",
+                        "/error",
+                        "/favicon.ico")
+                    .permitAll()
+                .anyRequest()
+                    .authenticated()
             .and()
             .oauth2Login()
                 .authorizationEndpoint()
@@ -65,6 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         
         http.addFilterBefore(jwtAuthenticationFilter(), 
                 UsernamePasswordAuthenticationFilter.class);
+        
+        http.headers().frameOptions().disable();
     }
     
     @Bean
