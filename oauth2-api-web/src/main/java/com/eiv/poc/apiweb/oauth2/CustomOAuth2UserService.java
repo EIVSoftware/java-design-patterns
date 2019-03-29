@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory
                 .getOAuth2UserInfo(oAuth2User.getAttributes());
         
-        OAuth2AccessToken accessToken = userRequest.getAccessToken();
-        
         LOG.debug("Usuario: {}", userInfo.getNombreCompleto());
         
         String username = userInfo.getUsername();
@@ -42,16 +39,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             usuarioService.actualizacion(
                     usuarioEntity.getId(), 
                     userInfo.getNombreCompleto(), 
-                    userInfo.getEmail(),
-                    accessToken.getTokenValue(),
-                    accessToken.getExpiresAt());
+                    userInfo.getEmail());
         } else {
             usuarioService.alta(
                     username, 
                     userInfo.getNombreCompleto(), 
-                    userInfo.getEmail(),
-                    accessToken.getTokenValue(),
-                    accessToken.getExpiresAt());
+                    userInfo.getEmail());
         }
         
         return oAuth2User;

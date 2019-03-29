@@ -1,6 +1,5 @@
 package com.eiv.poc.apiweb.entities;
 
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,12 +38,6 @@ public class UsuarioEntity {
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<AuthorityEntity> grantedAuthorities = new HashSet<>();
-    
-    @Column(name="access_token", nullable=true, length = 40)
-    private String accessToken;
-    
-    @Column(name="expiresa_at", nullable=true)
-    private Instant expiresAt;
     
     public UsuarioEntity() {}
 
@@ -106,22 +99,6 @@ public class UsuarioEntity {
 
     public void setGrantedAuthorities(Set<AuthorityEntity> grantedAuthorities) {
         this.grantedAuthorities = grantedAuthorities;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public Instant getExpiresAt() {
-        return expiresAt;
-    }
-
-    public void setExpiresAt(Instant expiresAt) {
-        this.expiresAt = expiresAt;
     }
 
     @Override

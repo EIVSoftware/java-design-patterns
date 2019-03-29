@@ -1,6 +1,5 @@
 package com.eiv.poc.apiweb.services;
 
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -38,9 +37,7 @@ public class UsuarioService {
     public UsuarioEntity alta(
             String username, 
             String nombreCompleto, 
-            String correo, 
-            String accessToken, 
-            Instant expiresAt) {
+            String correo) {
         
         Long id = usuarioRepository.getMaxId();
         
@@ -58,8 +55,6 @@ public class UsuarioService {
         UsuarioEntity usuarioEntity = new UsuarioEntity(id, username, nombreCompleto, correo);
         usuarioEntity.setHabilitado(true);
         usuarioEntity.setGrantedAuthorities(grantedAuthorities);
-        usuarioEntity.setAccessToken(accessToken);
-        usuarioEntity.setExpiresAt(expiresAt);
         
         usuarioRepository.save(usuarioEntity);
         
@@ -68,7 +63,7 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioEntity actualizacion(
-            Long id, String nombreCompleto, String correo, String accessToken, Instant expiresAt) {
+            Long id, String nombreCompleto, String correo) {
         
         Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(id);
         
@@ -82,8 +77,6 @@ public class UsuarioService {
         usuarioEntity.setCorreo(correo);
         usuarioEntity.setHabilitado(true);
         usuarioEntity.setNombreCompleto(nombreCompleto);
-        usuarioEntity.setAccessToken(accessToken);
-        usuarioEntity.setExpiresAt(expiresAt);
         
         usuarioRepository.save(usuarioEntity);
         
