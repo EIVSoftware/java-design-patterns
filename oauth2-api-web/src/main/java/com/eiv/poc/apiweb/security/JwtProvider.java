@@ -5,15 +5,13 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.eiv.poc.apiweb.oauth2.OAuth2UserInfo;
-import com.eiv.poc.apiweb.oauth2.OAuth2UserInfoFactory;
+import com.eiv.poc.apiweb.entities.UsuarioEntity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -31,21 +29,22 @@ public class JwtProvider {
     @Value("${app.auth.tokenExpirationMsec}")
     private Long tokenExpiration;
     
-    public String createToken(Authentication authentication) {
+    public JwtBuilder getJwtBuilder() {
 
-        DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
-        OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(
-                oAuth2User.getAttributes());
-        
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + tokenExpiration);
         
         return Jwts.builder()
-            .setSubject(userInfo.getId().toString())
             .setIssuedAt(new Date())
             .setExpiration(expiryDate)
-            .claim("nombreCompleto", userInfo.getNombreCompleto())
-            .signWith(SignatureAlgorithm.HS512, tokenSecret)
+            .signWith(SignatureAlgorithm.HS512, tokenSecret);
+    }
+    
+    public String createToken(UsuarioEntity usuarioEntity) {
+        
+        return getJwtBuilder()
+            .setSubject(usuarioEntity.getId().toString())
+            .claim("nombreCompleto", usuarioEntity.getNombreCompleto())
             .compact();
     }
     

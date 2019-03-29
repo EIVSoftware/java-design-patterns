@@ -15,8 +15,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.eiv.poc.apiweb.entities.UsuarioEntity;
 import com.eiv.poc.apiweb.security.JwtProvider;
+import com.eiv.poc.apiweb.services.UsuarioService;
 import com.eiv.poc.apiweb.utils.CookieUtils;
+import com.eiv.poc.apiweb.utils.OAuth2UserUtils;
 
 
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -29,6 +32,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     
     @Autowired
     private JwtProvider jwtProvider;
+    
+    @Autowired
+    private UsuarioService usuarioService;
     
     @Override
     public void onAuthenticationSuccess(
@@ -60,7 +66,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
         LOG.debug("Redirect URL: {}", targetUrl);
 
-        String token = jwtProvider.createToken(authentication);
+        OAuth2UserInfo userInfo = OAuth2UserUtils.getOAuth2UserInfo(authentication);
+        Optional<UsuarioEntity> usuarioOptional = usuarioService
+                .findyByUsername(userInfo.getUsername());
+        
+        UsuarioEntity usuarioEntity = usuarioOptional.get();
+        
+        String token = jwtProvider.createToken(usuarioEntity);
         LOG.debug("JWT: {}", token);
 
         return UriComponentsBuilder.fromUriString(targetUrl)
