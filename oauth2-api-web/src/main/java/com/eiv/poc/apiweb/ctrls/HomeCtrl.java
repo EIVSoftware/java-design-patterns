@@ -20,7 +20,7 @@ public class HomeCtrl {
     private OAuth2TokensInfoService oauth2TokensInfoService;
     
     @GetMapping("/home")
-    public String home(Principal principal) {
+    public OAuth2TokensInfo home(Principal principal) {
         
         // InMemoryOAuth2AuthorizedClientService
         
@@ -30,6 +30,6 @@ public class HomeCtrl {
             LOG.debug("Refresh token: {}", tokensInfo.getRefreshToken());
         }
         
-        return "HOME!!";
+        return tokensInfo;
     }
 }
