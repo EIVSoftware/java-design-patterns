@@ -24,7 +24,8 @@ public class HomeCtrl {
         
         // InMemoryOAuth2AuthorizedClientService
         
-        OAuth2TokensInfo tokensInfo = oauth2TokensInfoService.getOAuth2TokensInfo(principal.getName());
+        OAuth2TokensInfo tokensInfo = oauth2TokensInfoService.getOAuth2TokensInfo(
+                principal.getName());
         
         if(tokensInfo != null) {
             LOG.debug("Refresh token: {}", tokensInfo.getRefreshToken());
