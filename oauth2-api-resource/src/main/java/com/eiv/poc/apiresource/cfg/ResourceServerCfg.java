@@ -21,10 +21,9 @@ public class ResourceServerCfg extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-            .antMatcher("/**")
-                .authorizeRequests()
-                    .anyRequest()
-                    .authenticated();
+            .authorizeRequests()
+            .antMatchers("/**").access("#oauth2.hasScope('authresource.testing:all')")
+            .anyRequest().authenticated();
     }
 
     @Override
