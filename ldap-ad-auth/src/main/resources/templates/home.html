@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Home</title>
+<th:block th:insert="fragments/includes :: header" />
+</head>
+<body>
+	
+	<div class="container">
+		<h3>Home page!!</h3>
+		<a th:href="@{/logout}">Cerrar sesi&oacute;n !!!</a>
+		
+		<div sec:authorize="isAuthenticated()">
+		  Usuario autenticado!!
+		</div>
+		
+		Nombre de usuario: <b sec:authentication="name"></b>
+		<br>
+		Roles: <b sec:authentication="principal.authorities"></b>
+
+	</div>
+</body>
+</html>
