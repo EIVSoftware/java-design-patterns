@@ -1,0 +1,114 @@
+package com.eiv.poc.cfg;
+
+import org.apache.olingo.server.api.ODataApplicationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.cairone.olingo.ext.jpa.processors.ActionProcessor;
+import com.cairone.olingo.ext.jpa.processors.BatchRequestProcessor;
+import com.cairone.olingo.ext.jpa.processors.ComplexProcessorImpl;
+import com.cairone.olingo.ext.jpa.processors.MediaProcessor;
+import com.cairone.olingo.ext.jpa.processors.PrimitiveProcessorImpl;
+import com.cairone.olingo.ext.jpa.providers.EdmProvider;
+import com.eiv.poc.AppConstants;
+import com.eiv.poc.ctrls.ODataController;
+
+@Configuration
+public class OlingoConfig {
+	
+	@Value("${demo.odata.maxtopoption}") private Integer maxTopOption = null;
+	@Value("${demo.odata.serviceroot}") public String SERVICE_ROOT = null;
+	
+	@Value("${demo.odata.skipbylib}") public boolean skipByLib = true;
+	@Value("${demo.odata.topbylib}") public boolean topByLib = true;
+	
+    @Autowired private ApplicationContext context = null;
+    @Autowired ODataController dispatcherServlet = null;
+    
+    @Bean
+    public PrimitiveProcessorImpl getPrimitiveProcessor() throws ODataApplicationException {
+    	
+    	PrimitiveProcessorImpl primitiveProcessor = new PrimitiveProcessorImpl()
+	    	.setDefaultEdmPackage(AppConstants.DEFAULT_EDM_PACKAGE)
+			.setServiceRoot(SERVICE_ROOT)
+			.initialize(context);
+    	
+    	return primitiveProcessor;
+    }
+
+    @Bean
+    public ComplexProcessorImpl getComplexProcessor() throws ODataApplicationException {
+    	
+    	ComplexProcessorImpl complexProcessor = new ComplexProcessorImpl()
+	    	.setDefaultEdmPackage(AppConstants.DEFAULT_EDM_PACKAGE)
+			.setServiceRoot(SERVICE_ROOT)
+			.initialize(context);
+    	
+    	return complexProcessor;
+    }
+
+    @Bean
+    public MediaProcessor getMediaProcessor() throws ODataApplicationException {
+    	
+    	MediaProcessor mediaProcessor = new MediaProcessor()
+	    	.setDefaultEdmPackage(AppConstants.DEFAULT_EDM_PACKAGE)
+			.setServiceRoot(SERVICE_ROOT)
+			.setMaxTopOption(maxTopOption)
+			.setSkipByLib(skipByLib)
+			.setTopByLib(topByLib)
+			.initialize(context);
+    	
+    	return mediaProcessor;
+    }
+    
+    @Bean
+    public ActionProcessor getActionProcessor() throws ODataApplicationException {
+
+    	ActionProcessor processor = new ActionProcessor()
+    		.setDefaultEdmPackage(AppConstants.DEFAULT_EDM_PACKAGE)
+    		.setServiceRoot(SERVICE_ROOT)
+    		.initialize(context);
+    	
+    	return processor;
+    }
+    
+    @Bean
+    public BatchRequestProcessor getBatchRequestProcessor() {
+    	BatchRequestProcessor processor = new BatchRequestProcessor();
+    	return processor;
+    }
+    
+    @Bean
+    public EdmProvider getOdataexampleEdmProvider() throws ODataApplicationException {
+
+    	EdmProvider provider = new EdmProvider()
+    		.setContainerName(AppConstants.CONTAINER_NAME)
+    		.setDefaultEdmPackage(AppConstants.DEFAULT_EDM_PACKAGE)
+    		.setNameSpace(AppConstants.NAME_SPACE)
+    		.setServiceRoot(SERVICE_ROOT)
+    		.initialize();
+    	
+    	return provider;
+    }
+
+    @Bean
+    public ServletRegistrationBean<ODataController> dispatcherServletRegistration() {
+    	ServletRegistrationBean<ODataController> registration = new ServletRegistrationBean<ODataController>(dispatcherServlet, "/odata/odatademo.svc/*");
+    	return registration;
+    }
+    
+    @Bean
+    public DispatcherServletPath getDispatcherServletPath() {
+    	return new DispatcherServletPath() {
+			@Override
+			public String getPath() {
+				return "/odata/odatademo.svc";
+			}
+		};
+    }
+}
