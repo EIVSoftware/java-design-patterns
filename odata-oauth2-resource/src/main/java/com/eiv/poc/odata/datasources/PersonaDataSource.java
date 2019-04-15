@@ -24,7 +24,7 @@ import com.eiv.poc.entities.PersonaEntity;
 import com.eiv.poc.repositories.PersonaRepository;
 
 @Component
-public class PersonaDataSource implements DataSource<PersonaEdm> {
+public class PersonaDataSource implements DataSource {
 
     protected static final Logger LOG = LoggerFactory.getLogger(PersonaDataSource.class);
     private static final String ENTITY_SET_NAME = "Personas";
@@ -37,7 +37,7 @@ public class PersonaDataSource implements DataSource<PersonaEdm> {
     }
 
     @Override
-    public PersonaEdm create(PersonaEdm entity) throws ODataApplicationException {
+    public Object create(Object entity, Object superentity) throws ODataApplicationException {
         
         if(entity instanceof PersonaEdm) {
             LOG.debug("Endidad PersonaEdm: {}", entity);
@@ -51,7 +51,7 @@ public class PersonaDataSource implements DataSource<PersonaEdm> {
     }
 
     @Override
-    public PersonaEdm update(Map<String, UriParameter> keyPredicateMap, PersonaEdm entity,
+    public Object update(Map<String, UriParameter> keyPredicateMap, Object entity, Object superentity,
             List<String> propertiesInJSON, boolean isPut) throws ODataApplicationException {
 
         throw new ODataApplicationException(
@@ -60,8 +60,7 @@ public class PersonaDataSource implements DataSource<PersonaEdm> {
                 Locale.ENGLISH);
     }
 
-    @Override
-    public PersonaEdm delete(Map<String, UriParameter> keyPredicateMap)
+    public Object delete(Map<String, UriParameter> keyPredicateMap, Object superentity)
             throws ODataApplicationException {
         
         throw new ODataApplicationException(
