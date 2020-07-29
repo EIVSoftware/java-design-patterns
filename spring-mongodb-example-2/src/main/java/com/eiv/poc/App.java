@@ -40,14 +40,13 @@ public class App implements CommandLineRunner {
         DireccionDoc direccion = new DireccionDoc();
         direccion.setCalle("Sarmiento");
         direccion.setNumero("756");
-        direccion = mongoTemplate.insert(direccion);
-        System.out.println(String.format("Se guardó la dirección: %s", direccion));
         
         PersonaDoc persona = new PersonaDoc();
         persona.setNombre("Juan Perez");
         persona.setDireccion(direccion);
         persona = mongoTemplate.insert(persona);
-        System.out.println(String.format("Se guardó la persona: %s", persona));
+        System.out.println(String.format(
+                "Se guardó la persona %s junto con la dirección embebida %s", persona, direccion));
         
         // consulta la persona mediante método del repositorio
 
