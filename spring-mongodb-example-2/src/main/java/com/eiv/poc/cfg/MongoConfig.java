@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import com.mongodb.MongoClient;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "com.eiv.poc.repositories")
+@EnableMongoRepositories(basePackages = "com.eiv.poc.repository")
 public class MongoConfig extends AbstractMongoConfiguration {
  
     @Override
@@ -22,6 +22,6 @@ public class MongoConfig extends AbstractMongoConfiguration {
  
     @Override
     protected String getMappingBasePackage() {
-        return "com.eiv.poc.docs";
+        return "com.eiv.poc.doc";
     }
 }

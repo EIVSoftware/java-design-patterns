@@ -1,7 +1,6 @@
-package com.eiv.poc.docs;
+package com.eiv.poc.doc;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -13,15 +12,14 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-@Document
-public class PersonaDoc {
+@Document(collection = "direcciones")
+public class DireccionDoc {
     
     @Id
     private String id;
     
-    private String nombre;
+    private String calle;
     
-    @DBRef
-    private DireccionDoc direccion;
+    private String numero;
 
 }

@@ -10,9 +10,11 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.eiv.poc.docs.DireccionDoc;
-import com.eiv.poc.docs.PersonaDoc;
-import com.eiv.poc.repositories.PersonaRepository;
+import com.eiv.poc.doc.DireccionDoc;
+import com.eiv.poc.doc.PersonaDoc;
+import com.eiv.poc.doc.PersonaDoc.DireccionObj;
+import com.eiv.poc.doc.QPersonaDoc;
+import com.eiv.poc.repository.PersonaRepository;
 
 @SpringBootApplication
 public class App implements CommandLineRunner {
@@ -37,16 +39,25 @@ public class App implements CommandLineRunner {
         
         // crea una persona con dirección y la inserta en la base de datos
         
-        DireccionDoc direccion = new DireccionDoc();
-        direccion.setCalle("Sarmiento");
-        direccion.setNumero("756");
+        DireccionDoc direccionDoc = new DireccionDoc();
+        direccionDoc.setCalle("Sarmiento");
+        direccionDoc.setNumero("756");
+        direccionDoc = mongoTemplate.insert(direccionDoc);
+        System.out.println(String.format("Se guardó la dirección: %s", direccionDoc));
         
-        PersonaDoc persona = new PersonaDoc();
-        persona.setNombre("Juan Perez");
-        persona.setDireccion(direccion);
-        persona = mongoTemplate.insert(persona);
+        // crea una persona con dirección y la inserta en la base de datos
+        
+        DireccionObj direccionObj = new DireccionObj();
+        direccionObj.setCalle("Sarmiento");
+        direccionObj.setNumero("756");
+        
+        PersonaDoc personaDoc = new PersonaDoc();
+        personaDoc.setNombre("Juan Perez");
+        personaDoc.setDireccionObj(direccionObj);
+        personaDoc.setDireccionDoc(direccionDoc);
+        personaDoc = mongoTemplate.insert(personaDoc);
         System.out.println(String.format(
-                "Se guardó la persona %s junto con la dirección embebida %s", persona, direccion));
+                "Se guardó la persona: %s", personaDoc));
         
         // consulta la persona mediante método del repositorio
 
@@ -67,6 +78,16 @@ public class App implements CommandLineRunner {
         System.out.println(String.format("Resultados:"));
         resultado2.forEach(System.out::println);
         
+        // consulta con querydsl
+        
+        QPersonaDoc q = QPersonaDoc.personaDoc;
+        List<PersonaDoc> resultado3 = (List<PersonaDoc>) personaRepository.findAll(
+                q.nombre.eq("Juan Perez"));
+        System.out.println(String.format("Busqueda por nombre <%s> usando querydsl", nombre));
+        System.out.println(String.format("Cantidad de resultados: %d", resultado3.size()));
+        System.out.println(String.format("Resultados:"));
+        resultado3.forEach(System.out::println);
+
     }
     
 }
