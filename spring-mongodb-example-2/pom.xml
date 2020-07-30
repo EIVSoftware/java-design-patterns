@@ -17,7 +17,7 @@
         <packaging.type>jar</packaging.type>
         
         <logback.version>1.2.3</logback.version>
-        <querydsl.version>4.1.4</querydsl.version>
+        <querydsl.version>4.1.4</querydsl.version> <!-- 4.3.1 -->
     </properties>
 
     <dependencies>
@@ -52,12 +52,13 @@
         <!-- querydsl -->
         <dependency>
             <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-mongodb</artifactId>
+            <artifactId>querydsl-apt</artifactId>
             <version>${querydsl.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
+            <artifactId>querydsl-mongodb</artifactId>
             <version>${querydsl.version}</version>
         </dependency>
         
@@ -87,7 +88,7 @@
         </dependency>
         
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>

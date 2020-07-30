@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import com.eiv.poc.docs.DireccionDoc;
 import com.eiv.poc.docs.PersonaDoc;
+import com.eiv.poc.docs.QPersonaDoc;
 import com.eiv.poc.repositories.PersonaRepository;
 
 @SpringBootApplication
@@ -46,7 +47,7 @@ public class App implements CommandLineRunner {
         persona.setDireccion(direccion);
         persona = mongoTemplate.insert(persona);
         System.out.println(String.format(
-                "Se guardó la persona %s junto con la dirección embebida %s", persona, direccion));
+                "Se guardó la persona con dirección embebida: %s", persona));
         
         // consulta la persona mediante método del repositorio
 
@@ -67,6 +68,16 @@ public class App implements CommandLineRunner {
         System.out.println(String.format("Resultados:"));
         resultado2.forEach(System.out::println);
         
+        // consulta con querydsl
+        
+        QPersonaDoc q = QPersonaDoc.personaDoc;
+        List<PersonaDoc> resultado3 = (List<PersonaDoc>) personaRepository.findAll(
+                q.nombre.eq("Juan Perez"));
+        System.out.println(String.format("Busqueda por nombre <%s> usando querydsl", nombre));
+        System.out.println(String.format("Cantidad de resultados: %d", resultado3.size()));
+        System.out.println(String.format("Resultados:"));
+        resultado3.forEach(System.out::println);
+
     }
     
 }
