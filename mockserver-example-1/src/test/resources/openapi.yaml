@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  title: API de ejemplo
+  description: API de ejemplo para probar con MockServer
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: usuarios
+  description: Operaciones relacionadas a los usuariosers
+paths:
+  /usuarios:
+    get:
+      tags:
+      - usuarios
+      summary: busca usuarios
+      description: |
+        Consulta por los usuarios
+      responses:
+        "200":
+          description: por ahora un solo usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        "404":
+          description: not found
+components:
+  schemas:
+    Usuario:
+      required:
+      - id
+      - nombre
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        nombre:
+          type: string
+          example: Ismael
