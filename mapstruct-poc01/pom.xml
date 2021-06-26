@@ -20,11 +20,19 @@
     <maven.compiler.target>11</maven.compiler.target>
 
     <lombok.version>1.18.20</lombok.version>
+    <opencsv.version>5.4</opencsv.version>
+    <junit5.version>5.5.2</junit5.version>
 
   </properties>
 
   <dependencies>
-    
+
+    <dependency>
+      <groupId>com.opencsv</groupId>
+      <artifactId>opencsv</artifactId>
+      <version>${opencsv.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -35,7 +43,7 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.5.2</version>
+      <version>${junit5.version}</version>
     </dependency>
   
   </dependencies>

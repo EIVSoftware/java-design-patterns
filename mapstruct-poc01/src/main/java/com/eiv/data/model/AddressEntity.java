@@ -1,8 +1,10 @@
 package com.eiv.data.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class AddressEntity {
     
     private Long id;
