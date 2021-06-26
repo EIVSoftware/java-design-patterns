@@ -8,17 +8,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.eiv.data.repositories.AddressRepository;
+import com.eiv.data.repositories.PersonRepository;
 import com.opencsv.CSVReader;
 
 public class AppContext {
     
-    public final Map<Long, String[]> PERSONS = new HashMap<>();
+    private final Map<Long, String[]> PERSONS = new HashMap<>();
+    private final Map<Long, String[]> ADDRESSES = new HashMap<>();
 
-    public final Map<Long, String[]> ADDRESSES = new HashMap<>();
+    private final Map<Class<?>, Object> container = new HashMap<>();
 
     public AppContext() {
         initPersons();
         initAddresses();
+
+        PersonRepository personRepository = new PersonRepository(
+            PERSONS);
+        container.put(PersonRepository.class, personRepository);
+
+        AddressRepository addressRepository = new AddressRepository(
+            personRepository, ADDRESSES);
+        container.put(AddressRepository.class, addressRepository);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T getBean(Class<T> type) {
+        return (T) container.get(type);
     }
 
     private void initPersons() {

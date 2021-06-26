@@ -6,22 +6,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.eiv.App;
-import com.eiv.AppContext;
 import com.eiv.data.model.AddressEntity;
 import com.eiv.data.model.PersonEntity;
 
 public class AddressRepository implements DataRepository<AddressEntity, Long> {
     
-    private PersonRepository personRepository = new PersonRepository();
     private Map<Long, AddressEntity> addressMap = new HashMap<>();
 
-    public AddressRepository() {
-
-        AppContext ctx = App.context;
+    public AddressRepository(
+            final PersonRepository personRepository, final Map<Long, String[]> ADDRESSES) {
                 
-        Map<Long, String[]> ADDRESSES = ctx.ADDRESSES;
-
         ADDRESSES.entrySet().forEach(entry -> {
             String[] fields = entry.getValue();
 

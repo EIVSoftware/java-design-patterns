@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.eiv.App;
-import com.eiv.AppContext;
 import com.eiv.data.model.GenderEnum;
 import com.eiv.data.model.PersonEntity;
 
@@ -16,12 +14,8 @@ public class PersonRepository implements DataRepository<PersonEntity, Long> {
 
     private Map<Long, PersonEntity> personMap = new HashMap<>();
     
-    public PersonRepository() {
+    public PersonRepository(Map<Long, String[]> PERSONS) {
 
-        AppContext ctx = App.context;
-                
-        Map<Long, String[]> PERSONS = ctx.PERSONS;
-        
         PERSONS.entrySet().forEach(entry -> {
             String[] fields = entry.getValue();
 
