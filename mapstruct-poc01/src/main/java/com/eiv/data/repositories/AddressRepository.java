@@ -23,7 +23,7 @@ public class AddressRepository implements DataRepository<AddressEntity, Long> {
             Long personId = Long.valueOf(fields[1]);
             String street = fields[2];
             String number = fields[3];
-            Boolean mainAddress = fields[2].equals("1");
+            Boolean mainAddress = fields[4].equals("1");
             
             PersonEntity person = personRepository.findById(personId)
                 .orElseThrow(() -> new RuntimeException(
@@ -40,6 +40,13 @@ public class AddressRepository implements DataRepository<AddressEntity, Long> {
     public List<AddressEntity> findAll() {
         return addressMap.entrySet().stream()
                 .map(entry -> entry.getValue())
+                .collect(Collectors.toList());
+    }
+
+    public List<AddressEntity> findAll(PersonEntity personEntity) {
+        return addressMap.entrySet().stream()
+                .map(entry -> entry.getValue())
+                .filter(p -> p.getPerson().equals(personEntity))
                 .collect(Collectors.toList());
     }
 

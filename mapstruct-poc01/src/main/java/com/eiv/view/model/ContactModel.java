@@ -17,9 +17,9 @@ public class ContactModel {
     private LocalDate birthDate;
 
     private GenderEnum gender;
-
+    
     private AddressModel mainAddress;
-
+    
     private List<AddressModel> altAddresses;
     
 }
