@@ -22,6 +22,7 @@
     <lombok.version>1.18.20</lombok.version>
     <opencsv.version>5.4</opencsv.version>
     <junit5.version>5.5.2</junit5.version>
+    <mapstruct.version>1.4.2.Final</mapstruct.version>
 
   </properties>
 
@@ -45,6 +46,12 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit5.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${mapstruct.version}</version>
+  </dependency>
   
   </dependencies>
 
@@ -57,7 +64,13 @@
               <configuration>
                   <source>11</source>
                   <target>11</target>
-                  
+                  <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>${org.mapstruct.version}</version>
+                    </path>
+                </annotationProcessorPaths>
               </configuration>
           </plugin>
       </plugins>

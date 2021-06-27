@@ -1,6 +1,5 @@
 package com.eiv;
 
-import com.eiv.data.repositories.AddressRepository;
 import com.eiv.data.repositories.PersonRepository;
 
 public class App 
@@ -19,10 +18,5 @@ public class App
             System.out.println( "person: " + person );
         });
         
-        AddressRepository addressRepository = ctx.getBean(AddressRepository.class);
-
-        addressRepository.findAll().forEach(address -> {
-            System.out.println( "address: " + address );
-        });
     }
 }
