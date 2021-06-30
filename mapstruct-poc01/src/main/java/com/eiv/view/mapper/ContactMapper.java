@@ -13,10 +13,13 @@ public interface ContactMapper {
     
     ContactMapper INSTANCE = Mappers.getMapper( ContactMapper.class ); 
 
+    @Mapping(target = "mainAddress", ignore = true)
+    @Mapping(target = "altAddresses", ignore = true)
     ContactModel fromPersonaEntity(PersonEntity personEntity);
 
     @Mapping(target = ".", source = "addressEntity.person")
     @Mapping(target = "mainAddress", source = "addressEntity")
+    @Mapping(target = "altAddresses", ignore = true)
     ContactModel fromAddressEntity(AddressEntity addressEntity);
 
 }
