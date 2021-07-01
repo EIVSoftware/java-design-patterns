@@ -13,7 +13,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(uses = {AddressMapper.class})
 public interface ContactMapper {
     
-    ContactMapper INSTANCE = Mappers.getMapper( ContactMapper.class ); 
+    ContactMapper INSTANCE = Mappers.getMapper(ContactMapper.class);
 
     @Mapping(target = "mainAddress", ignore = true)
     @Mapping(target = "altAddresses", ignore = true)
@@ -30,6 +30,7 @@ public interface ContactMapper {
     @Mapping(target = "birthDate", source = "addressEntity.person.birthDate")
     @Mapping(target = "gender", source = "addressEntity.person.gender")
     @Mapping(target = "id", source = "addressEntity.person.id")
-    ContactModel fromAddressesEntity(AddressEntity addressEntity, List<AddressEntity> addressEntities);
+    ContactModel fromAddressesEntity(AddressEntity addressEntity,
+            List<AddressEntity> addressEntities);
 
 }

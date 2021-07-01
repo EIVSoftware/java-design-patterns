@@ -26,11 +26,11 @@ public class AddressRepository implements DataRepository<AddressEntity, Long> {
             Boolean mainAddress = fields[4].equals("1");
             
             PersonEntity person = personRepository.findById(personId)
-                .orElseThrow(() -> new RuntimeException(
+                    .orElseThrow(() -> new RuntimeException(
                     "Person with ID {} does not exists!"));
 
             AddressEntity addressEntity = new AddressEntity(
-                id, person, street, number, mainAddress);
+                    id, person, street, number, mainAddress);
             
             addressMap.put(id, addressEntity);
         });

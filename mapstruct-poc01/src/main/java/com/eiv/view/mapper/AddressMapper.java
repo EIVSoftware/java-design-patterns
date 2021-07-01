@@ -8,8 +8,8 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface AddressMapper {
-    
-    AddressMapper INSTANCE = Mappers.getMapper( AddressMapper.class ); 
+
+    AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 
     AddressModel fromAddressEntity(AddressEntity addressEntity);
 
