@@ -5,10 +5,13 @@ import java.math.BigDecimal;
 import com.eiv.data.enums.MonedaCodigoEnum;
 import com.eiv.data.enums.ServicioEstadoEnum;
 import com.eiv.input.CuentaId;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
 
 @Data
+@JsonInclude(Include.NON_NULL)
 public class CuentaModel implements CuentaId {
 
     private Long sucursalId;

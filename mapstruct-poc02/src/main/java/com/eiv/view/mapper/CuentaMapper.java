@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import com.eiv.data.model.CuentaVistaAcuerdoEntity;
 import com.eiv.data.model.CuentaVistaEntity;
@@ -13,10 +12,8 @@ import com.eiv.data.model.CuentaVistaSaldoEntity;
 import com.eiv.view.mapper.qualifiers.SummaryModel;
 import com.eiv.view.model.CuentaModel;
 
-@Mapper(uses = {SucursalMapper.class, LineaMapper.class})
+@Mapper(uses = {SucursalMapper.class, LineaMapper.class}, componentModel = "spring")
 public interface CuentaMapper {
-
-    CuentaMapper INSTANCE = Mappers.getMapper(CuentaMapper.class);
 
     @Mapping(target = "sucursal", source = "cuenta.sucursal", qualifiedBy = SummaryModel.class)
     @Mapping(target = "linea", source = "cuenta.linea", qualifiedBy = SummaryModel.class)

@@ -3,16 +3,13 @@ package com.eiv.view.mapper;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import com.eiv.data.model.SucursalEntity;
 import com.eiv.view.mapper.qualifiers.SummaryModel;
 import com.eiv.view.model.SucursalModel;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SucursalMapper {
-
-    SucursalMapper INSTANCE = Mappers.getMapper(SucursalMapper.class);
 
     SucursalModel toFullModel(SucursalEntity entity);
 
