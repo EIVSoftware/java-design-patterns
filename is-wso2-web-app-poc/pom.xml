@@ -9,20 +9,26 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.eiv</groupId>
-	<artifactId>is-wso2-web-resource-poc</artifactId>
+	<artifactId>is-wso2-web-app-poc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Web Resource protected by IS WSO2</name>
-	<description>Demo project for protecting a Web API (rest) through WSO2 IS</description>
-	
+	<name>Web app (IS WSO2 client)</name>
+	<description>An IS WSO2 client interacting with a microservice</description>
 	<properties>
 		<java.version>11</java.version>
-		<springdoc.version>1.5.9</springdoc.version>
+		<spring-cloud.version>2020.0.3</spring-cloud.version>
 	</properties>
-	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 
 		<dependency>
@@ -41,43 +47,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.nimbusds</groupId>
-			<artifactId>oauth2-oidc-sdk</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
-		
-		<!-- SPRINGDOC -->
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>${springdoc.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-data-rest</artifactId>
-			<version>${springdoc.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -96,16 +77,4 @@
 		</plugins>
 	</build>
 
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2020.0.3</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 </project>

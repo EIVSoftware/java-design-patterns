@@ -14,17 +14,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-public class EchoCtrl {
+public class StringCtrl {
     
-    @GetMapping("/echo")
-    public ResponseEntity<EchoModel> sendEcho(String msg, Authentication auth) {
+    @GetMapping("/touppercase")
+    public ResponseEntity<EchoModel> toUpperCase(String msg, Authentication auth) {
         
         OAuth2IntrospectionAuthenticatedPrincipal principal = 
         (OAuth2IntrospectionAuthenticatedPrincipal) auth.getPrincipal();
         
         log.info("Authenticated user: {}", principal.getUsername());
 
-        EchoModel response = new EchoModel(msg);
+        EchoModel response = new EchoModel(msg == null ? null : msg.trim().toUpperCase());
         return ResponseEntity.ok(response);
     }
 }
