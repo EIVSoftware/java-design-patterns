@@ -18,8 +18,15 @@ public class ResourceSecurityCfg extends WebSecurityConfigurerAdapter {
 
         http
             .authorizeRequests()
+                .antMatchers(
+                    "/error/**",
+                    "/actuator/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**", "/swagger-ui.html/**", "/swagger-resources/**"
+                    )
+                .permitAll()
                 .anyRequest()
-                .authenticated()
+                    .authenticated()
             .and()
             .sessionManagement()
                 .sessionCreationPolicy(
