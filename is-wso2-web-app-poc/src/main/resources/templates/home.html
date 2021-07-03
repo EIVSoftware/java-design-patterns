@@ -9,10 +9,21 @@
 <body>
 <nav class="navbar navbar-light bg-light">
   <span class="navbar-brand mb-0 h1">OAuth Web Client</span>
+  <ul class="navbar-nav ml-md-auto">
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/logout}" aria-label="Logout">Logout</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="https://is.eivsoftware.net:9443/myaccount" target="_black" aria-label="Logout">My account</a>
+    </li>
+  </ul>
 </nav>
 
 <div class="container">
-	<div class="row mt-5">
+	<div class="row col py-3">
+		<h4 th:text="'Hello ' + ${username} + '!'"></h4>
+	</div>
+	<div class="row">
 		<div class="col">
 		<form name="form" method="post" autocomplete="off">
 		  <div class="form-group">

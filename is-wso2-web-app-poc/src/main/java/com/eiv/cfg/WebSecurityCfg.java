@@ -18,7 +18,7 @@ public class WebSecurityCfg extends WebSecurityConfigurerAdapter {
             .csrf()
                 .disable()
             .authorizeRequests()
-                .antMatchers("/login")
+                .antMatchers("/login", "/webjars/**")
                     .permitAll()
                 .anyRequest()
                     .authenticated()
@@ -41,7 +41,7 @@ public class WebSecurityCfg extends WebSecurityConfigurerAdapter {
         OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
                 new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
 
-        oidcLogoutSuccessHandler.setPostLogoutRedirectUri("http://localhost:8080");
+        oidcLogoutSuccessHandler.setPostLogoutRedirectUri("http://localhost:8080/login");
 
         return oidcLogoutSuccessHandler;
     }
