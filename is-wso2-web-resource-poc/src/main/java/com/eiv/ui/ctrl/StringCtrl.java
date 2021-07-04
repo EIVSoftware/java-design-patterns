@@ -1,6 +1,6 @@
 package com.eiv.ui.ctrl;
 
-import com.eiv.ui.model.EchoModel;
+import com.eiv.ui.model.ResponseModel;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,14 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 public class StringCtrl {
     
     @GetMapping("/touppercase")
-    public ResponseEntity<EchoModel> toUpperCase(String msg, Authentication auth) {
+    public ResponseEntity<ResponseModel> toUpperCase(String msg, Authentication auth) {
         
         OAuth2IntrospectionAuthenticatedPrincipal principal = 
         (OAuth2IntrospectionAuthenticatedPrincipal) auth.getPrincipal();
         
         log.info("Authenticated user: {}", principal.getUsername());
 
-        EchoModel response = new EchoModel(msg == null ? null : msg.trim().toUpperCase());
+        ResponseModel response = new ResponseModel(msg == null ? null : msg.trim().toUpperCase());
         return ResponseEntity.ok(response);
     }
 }

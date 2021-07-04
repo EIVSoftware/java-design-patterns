@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OAuth Web Client Home</title>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" />
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">OAuth Web Client</span>
+  <ul class="navbar-nav ml-md-auto">
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/logout}" aria-label="Logout">Logout</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="https://is.eivsoftware.net:9443/myaccount" target="_black" aria-label="Logout">My account</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container">
+	<div class="row col py-3">
+		<h4 th:text="'Hello ' + ${username} + '!'"></h4>
+	</div>
+	<div class="row">
+		<div class="col">
+		<h3 th:text="${result}"></h3>
+		</div>
+	</div>
+</div>
+
+</body>
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.5.3/js/bootstrap.min.js}"></script>
+</html>

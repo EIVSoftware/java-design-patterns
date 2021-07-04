@@ -1,4 +1,4 @@
-package com.eiv.ui.model;
+package com.eiv.data.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
