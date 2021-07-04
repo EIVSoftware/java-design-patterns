@@ -14,15 +14,11 @@ import lombok.Data;
 @JsonInclude(Include.NON_NULL)
 public class CuentaModel implements CuentaId {
 
-    private Long sucursalId;
-
-    private Long lineaId;
-
-    private Long servicioId;
-
     private SucursalModel sucursal;
 
     private LineaModel linea;
+
+    private ServicioModel servicio;
 
     private MonedaCodigoEnum moneda;
 
@@ -31,5 +27,20 @@ public class CuentaModel implements CuentaId {
     private ServicioEstadoEnum estado;
 
     private BigDecimal acuerdo;
+
+    @Override
+    public Long getSucursalId() {
+        return sucursal.getId();
+    }
+
+    @Override
+    public Long getLineaId() {
+        return linea.getId();
+    }
+
+    @Override
+    public Long getServicioId() {
+        return servicio.getId();
+    }
 
 }

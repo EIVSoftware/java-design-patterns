@@ -1,10 +1,13 @@
 package com.eiv.mgr;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.eiv.das.CuentaVistaAcuerdoDas;
@@ -30,17 +33,20 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class CuentaFindByIdManager implements Manager<CuentaModel> {
+public class CuentaByIdManager implements Manager<CuentaModel> {
 
     private final CuentaVistaDas cuentaVistaDas;
     private final CuentaVistaSaldoDas cuentaVistaSaldoDas;
     private final CuentaVistaAcuerdoDas cuentaVistaAcuerdoDas;
 
+    @Value("#{T(java.time.LocalDate).parse('${eivfinanciero.sistema.fecha}')}")
+    private LocalDate fechaSistema;
+
     private final CuentaMapper cuentaMapper;
 
     private CuentaId cuentaId;
 
-    public CuentaFindByIdManager setCuentaId(CuentaId cuentaId) {
+    public CuentaByIdManager setCuentaId(CuentaId cuentaId) {
         this.cuentaId = cuentaId;
         return this;
     }
@@ -71,7 +77,8 @@ public class CuentaFindByIdManager implements Manager<CuentaModel> {
         CuentaAcuerdoFindAllTask cuentaAcuerdoTask = CuentaAcuerdoFindAllTask.builder()
                 .cuentaVistaAcuerdoDas(cuentaVistaAcuerdoDas)
                 .build()
-                .setQueryCallback(cuentaAcuerdoPredicate(cuenta));
+                .setQueryCallback(cuentaAcuerdoPredicate(cuenta))
+                .setPageable(Pageable.unpaged());
         List<CuentaVistaAcuerdoEntity> acuerdos =
                 new TaskRunner<Page<CuentaVistaAcuerdoEntity>, CuentaAcuerdoFindAllTask>()
                 .given(cuentaAcuerdoTask)
@@ -85,8 +92,8 @@ public class CuentaFindByIdManager implements Manager<CuentaModel> {
 
         return q -> {
             BooleanBuilder builder = new BooleanBuilder();
-            builder.and(q.sucursal.id.eq(cuentaId.getSucursalId()));
-            builder.and(q.linea.id.eq(cuentaId.getLineaId()));
+            builder.and(q.servicio.sucursal.id.eq(cuentaId.getSucursalId()));
+            builder.and(q.servicio.linea.id.eq(cuentaId.getLineaId()));
             builder.and(q.servicio.id.eq(cuentaId.getServicioId()));
             return builder;
         };
@@ -97,7 +104,8 @@ public class CuentaFindByIdManager implements Manager<CuentaModel> {
 
         return q -> {
             BooleanBuilder builder = new BooleanBuilder();
-            // TODO
+            builder.and(q.servicio.eq(cuenta.getServicio()));
+            builder.and(q.fecha.eq(fechaSistema));
             return builder;
         };
     }
@@ -107,7 +115,7 @@ public class CuentaFindByIdManager implements Manager<CuentaModel> {
 
         return q -> {
             BooleanBuilder builder = new BooleanBuilder();
-            // TODO
+            builder.and(q.servicio.eq(cuenta.getServicio()));
             return builder;
         };
     }
