@@ -1,7 +1,5 @@
 package com.eiv.mgr;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Component;
 
 import com.eiv.das.ServicioDas;
@@ -40,12 +38,12 @@ public class ServicioByIdManager implements Manager<ServicioModel> {
                         servicioId.getOperatoria(),
                         servicioId.getLineaId(),
                         servicioId.getServicioId()));
-        ServicioEntity servicio = new TaskRunner<Optional<ServicioEntity>, ServicioByIdTask>()
+        
+        ServicioModel servicioModel = new TaskRunner<ServicioEntity, ServicioByIdTask>()
                 .given(task)
-                .run()
-                .orElseThrow(() -> new RuntimeException("servicio no encontrado"));
+                .run(servicioEntity -> servicioMapper.toFullModel(servicioEntity));
 
-        return servicioMapper.toFullModel(servicio);
+        return servicioModel;
     }
 
 }
