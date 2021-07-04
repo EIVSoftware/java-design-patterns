@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "eivfinanciero.sistema.fecha",
+  "type": "java.lang.String",
+  "description": "Fecha operativa en la que el sistema se encuentra trabajando."
+}]}

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eiv.input.CuentaId;
-import com.eiv.mgr.CuentaFindByIdManager;
+import com.eiv.service.CuentaService;
 import com.eiv.view.model.CuentaModel;
 
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/cuentas")
 public class CuentaCtrl {
 
-    private final CuentaFindByIdManager cuentaFindByIdMgr;
+    private final CuentaService cuentaService;
 
     @GetMapping
     private ResponseEntity<CuentaModel> buscarPorId(CuentaId cuentaId) {
 
-        CuentaModel cuenta = cuentaFindByIdMgr.setCuentaId(cuentaId).execute();
+        CuentaModel cuenta = cuentaService.findById(cuentaId);
         return ResponseEntity.ok(cuenta);
     }
 
