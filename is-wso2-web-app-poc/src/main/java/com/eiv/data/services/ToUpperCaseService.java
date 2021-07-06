@@ -1,5 +1,7 @@
 package com.eiv.data.services;
 
+import org.springframework.web.client.RestTemplate;
+
 import com.eiv.data.model.ResponseModel;
 
 /**
@@ -10,8 +12,8 @@ import com.eiv.data.model.ResponseModel;
  */
 public class ToUpperCaseService extends ApiBinding {
 
-    public ToUpperCaseService(String accessToken) {
-        super(accessToken);
+    public ToUpperCaseService(RestTemplate restTemplate, String accessToken) {
+        super(restTemplate, accessToken);
     }
     
     public String toUpperCase(String value) {
