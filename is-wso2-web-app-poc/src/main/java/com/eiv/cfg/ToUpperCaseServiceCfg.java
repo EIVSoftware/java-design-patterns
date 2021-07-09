@@ -14,7 +14,7 @@ import com.eiv.data.services.ToUpperCaseService;
 
 @Configuration
 public class ToUpperCaseServiceCfg {
-	
+
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
@@ -26,9 +26,9 @@ public class ToUpperCaseServiceCfg {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String accessToken = null;
-      
+
         if (authentication.getClass().isAssignableFrom(OAuth2AuthenticationToken.class)) {
-        
+
             OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
             String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId();
 
