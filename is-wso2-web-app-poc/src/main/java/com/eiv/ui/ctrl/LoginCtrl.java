@@ -14,7 +14,6 @@ public class LoginCtrl {
     
     @PostMapping("/login")
     public String loginPost() {
-        //return "redirect:/oauth2/authorization/wso2";
-    	return "redirect:/oauth2/authorization/auth0";
+        return "redirect:/oauth2/authorization/wso2";
     }
 }

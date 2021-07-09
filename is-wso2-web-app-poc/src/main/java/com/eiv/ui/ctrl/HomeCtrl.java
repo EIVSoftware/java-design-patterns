@@ -2,7 +2,7 @@ package com.eiv.ui.ctrl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +19,15 @@ public class HomeCtrl {
     @Autowired private ToUpperCaseService service;
     
     @GetMapping("/home")
-    public String homeGet(@AuthenticationPrincipal OidcUser principal, Model model) {
-        String username = principal.getClaim("name");
+    public String homeGet(@AuthenticationPrincipal DefaultOAuth2User principal, Model model) {
+        String username = principal.getName();
         model.addAttribute("username", username);
         return "home";
     }
     
     @PostMapping("/home")
     public String homePost(
-    		@AuthenticationPrincipal OidcUser principal, String text, Model model) {
+            @AuthenticationPrincipal DefaultOAuth2User principal, String text, Model model) {
         
         log.info("Text received to convert to UPPERCASE: {}", text);
         
@@ -36,7 +36,7 @@ public class HomeCtrl {
         
         model.addAttribute("result", result);
         
-        String username = principal.getClaim("name");
+        String username = principal.getName();
         model.addAttribute("username", username);
         
         return "result";

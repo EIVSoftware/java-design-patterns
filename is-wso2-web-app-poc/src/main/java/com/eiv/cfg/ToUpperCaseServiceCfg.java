@@ -4,10 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -33,10 +32,11 @@ public class ToUpperCaseServiceCfg {
             OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
             String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId();
 
-            if (clientRegistrationId.equals("auth0")) {
+            if (clientRegistrationId.equals("wso2")) {
 
-            	OidcUser oidcUser = (DefaultOidcUser) authentication.getPrincipal();
-            	accessToken = oidcUser.getIdToken().getTokenValue();
+                OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
+                      clientRegistrationId, oauthToken.getName());
+                accessToken = client.getAccessToken().getTokenValue();
             }
         }
 
