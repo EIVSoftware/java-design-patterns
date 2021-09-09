@@ -20,7 +20,7 @@ public class HomeCtrl {
     
     @GetMapping("/home")
     public String homeGet(@AuthenticationPrincipal OidcUser principal, Model model) {
-        String username = principal.getClaim("name");
+        String username = principal.getClaim("sub");
         model.addAttribute("username", username);
         return "home";
     }
