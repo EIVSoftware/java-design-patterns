@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eiv.Parameter;
 import com.eiv.ParameterContainer;
+import com.eiv.cfg.RedisProducer;
 import com.eiv.ui.response.ParamResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,11 @@ public class BoolParamCtrl {
     private static final String PARAM_NAME = "param-bool";
     
     private final ParameterContainer container;
+    private final RedisProducer redisProducer;
     
     @GetMapping
     public ParamResponse getParamValue() {
+        redisProducer.send("Se lee mensaje");
         return new ParamResponse( container.getByName(PARAM_NAME) );
     }
     
