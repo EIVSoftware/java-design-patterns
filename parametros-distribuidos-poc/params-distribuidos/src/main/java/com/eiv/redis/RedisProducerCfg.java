@@ -1,4 +1,4 @@
-package com.eiv.cfg;
+package com.eiv.redis;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

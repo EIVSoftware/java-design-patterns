@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eiv.Parameter;
 import com.eiv.ParameterContainer;
-import com.eiv.cfg.RedisProducer;
+import com.eiv.redis.RedisProducer;
 import com.eiv.ui.response.ParamResponse;
 
 import lombok.RequiredArgsConstructor;
