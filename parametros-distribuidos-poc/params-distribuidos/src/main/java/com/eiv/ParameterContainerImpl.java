@@ -11,6 +11,7 @@ public class ParameterContainerImpl implements ParameterContainer {
         this.map = new HashMap<>();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Parameter<?> getByName(String name) {
         return map == null ? null : map.get(name);
