@@ -2,15 +2,17 @@ package com.eiv;
 
 import lombok.Builder;
 import lombok.Value;
+import lombok.extern.jackson.Jacksonized;
 
-@Value
 @Builder
+@Value
+@Jacksonized
 public class Parameter<T> {
 
-    private final String name;
+    private String name;
     
-    private final Class<T> type;
+    private Class<T> type;
     
-    private final T value;
+    private T value;
     
 }

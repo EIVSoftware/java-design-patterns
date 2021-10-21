@@ -3,6 +3,8 @@ package com.eiv.redis;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.eiv.Parameter;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -13,9 +15,9 @@ public class RedisProducer {
     
     private final RedisTemplate<String, RedisMessage> redisTemplate;
     
-    public void send(String message) { 
+    public void send(Parameter<?> param) { 
         RedisMessage rm = new RedisMessage();
-        rm.setText(message);
+        rm.setParam(param);
         redisTemplate.convertAndSend(TOPIC_NAME, rm);
     }
 }

@@ -24,7 +24,6 @@ public class BoolParamCtrl {
     
     @GetMapping
     public ParamResponse getParamValue() {
-        redisProducer.send("Se lee mensaje");
         return new ParamResponse( container.getByName(PARAM_NAME) );
     }
     
@@ -32,6 +31,7 @@ public class BoolParamCtrl {
     public ParamResponse setParamValue() {
         Parameter<Boolean> current = container.getByName(PARAM_NAME);
         container.addParameter(PARAM_NAME, Boolean.class, !current.getValue());
+        redisProducer.send(container.getByName(PARAM_NAME));
         return new ParamResponse(container.getByName(PARAM_NAME));
     }
     

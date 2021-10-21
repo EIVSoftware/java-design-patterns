@@ -9,6 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 public class RedisConsumer {
 
     public void handleMessage(RedisMessage message) {
-        log.info("Message: {}", message.getText());
+        log.info("Message: {}", message.getParam());
     }
 }
